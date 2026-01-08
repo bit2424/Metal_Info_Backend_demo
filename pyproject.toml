@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "metal-info-backend"
+version = "0.1.0"
+description = "Metal prices fetching service with Django REST Framework"
+authors = ["Metycle Team"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+django = "^5.1"
+djangorestframework = "^3.15"
+psycopg2-binary = "^2.9"
+requests = "^2.32"
+python-dotenv = "^1.0"
+django-cors-headers = "^4.6"
+django-safedelete = "^1.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+pytest-django = "^4.9"
+factory-boy = "^3.3"
+ruff = "^0.8"
+pre-commit = "^4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+addopts = "--reuse-db -v"
+pythonpath = [".", "src"]
+python_files = "test_*.py"
+testpaths = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+exclude = ["migrations", ".venv", "__pycache__"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "UP", "C4", "SIM", "T20", "Q", "RUF"]
+ignore = ["E501"]  # Line too long (handled by formatter)
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
