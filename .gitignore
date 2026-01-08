@@ -23,6 +23,16 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Poetry
+poetry.lock
 
 # Django
 *.log
@@ -47,10 +57,11 @@ db.sqlite3-journal
 .coverage
 htmlcov/
 .tox/
+.nox/
 
-# OS
-.DS_Store
-Thumbs.db
+# Celery
+celerybeat-schedule
+celerybeat.pid
 
 # Poetry
 poetry.lock
