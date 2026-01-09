@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key-change-in-producti
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0,believably-graphitic-ann.ngrok-free.dev").split(",")
 
 # Application definition
 INSTALLED_APPS = [
@@ -125,10 +125,13 @@ REST_FRAMEWORK = {
 }
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = os.getenv(
-    "CORS_ALLOWED_ORIGINS",
-    "http://localhost:5173,http://localhost:3000"
-).split(",")
+# Allow all origins (useful for development, restrict in production)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = os.getenv(
+#     "CORS_ALLOWED_ORIGINS",
+#     "http://localhost:5173,http://localhost:3000,http://localhost:8080"
+# ).split(",")
 
 CORS_ALLOW_METHODS = [
     "GET",
@@ -146,6 +149,7 @@ CORS_ALLOW_HEADERS = [
     "content-type",
     "origin",
     "x-requested-with",
+    "ngrok-skip-browser-warning",
 ]
 
 # Metal Prices Configuration
