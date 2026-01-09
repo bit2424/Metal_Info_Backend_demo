@@ -42,22 +42,22 @@ pre-commit: ## Run pre-commit hooks on all files
 update: install migrate pre-commit ## Install dependencies, run migrations, and setup pre-commit
 
 docker-up: ## Start Docker containers
-	docker-compose up -d
+	docker compose up -d
 
 docker-down: ## Stop Docker containers
-	docker-compose down
+	docker compose down
 
 docker-logs: ## View Docker container logs
-	docker-compose logs -f
+	docker compose logs -f
 
 docker-build: ## Build Docker images
-	docker-compose build
+	docker compose build
 
 docker-shell: ## Open shell in web container
-	docker-compose exec web python src/manage.py shell
+	docker compose exec web python src/manage.py shell
 
 docker-test: ## Run tests in Docker
-	docker-compose exec web poetry run pytest
+	docker compose exec web poetry run pytest
 
 clean: ## Clean up Python cache files
 	find . -type d -name "__pycache__" -exec rm -rf {} +
