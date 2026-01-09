@@ -2,7 +2,7 @@
 Business logic services for Metal Prices.
 """
 import logging
-from datetime import datetime
+from datetime import datetime, timezone as dt_timezone
 from decimal import Decimal
 from typing import Any
 
@@ -102,7 +102,7 @@ class MetalPriceService:
             # Convert lastDate timestamp from milliseconds to datetime
             last_date_ts = metal_data.get("lastDate")
             last_date = (
-                datetime.fromtimestamp(last_date_ts / 1000, tz=timezone.utc)
+                datetime.fromtimestamp(last_date_ts / 1000, tz=dt_timezone.utc)
                 if last_date_ts
                 else None
             )
