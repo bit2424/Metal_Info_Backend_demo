@@ -16,6 +16,10 @@ python-dotenv = "^1.0"
 django-cors-headers = "^4.6"
 django-safedelete = "^1.4"
 attrs = "^25.3.0"
+celery = "^5.4"
+redis = "^5.0"
+feedparser = "^6.0"
+django-celery-beat = "^2.7"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3"
