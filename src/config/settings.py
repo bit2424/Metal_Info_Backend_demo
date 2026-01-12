@@ -32,9 +32,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "safedelete",
+    "django_celery_beat",
     # Local apps
     "shared",
     "metal_prices",
+    "metal_news",
 ]
 
 MIDDLEWARE = [
@@ -152,6 +154,23 @@ CORS_ALLOW_HEADERS = [
     "ngrok-skip-browser-warning",
 ]
 
+# Celery Configuration
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# Celery Beat Schedule
+CELERY_BEAT_SCHEDULE = {
+    "fetch-metal-news-every-hour": {
+        "task": "metal_news.tasks.fetch_metal_news_task",
+        "schedule": 3600.0,  # Every hour (in seconds)
+    },
+}
+
 # Metal Prices Configuration
 METAL_PRICES_CONFIG = {
     "API_URL": os.getenv(
@@ -173,6 +192,25 @@ METAL_PRICES_CONFIG = {
         "Troma",
         "Zorba",
     ],
+}
+
+# Metal News Configuration
+METAL_NEWS_CONFIG = {
+    "RSS_SEARCH_TERMS": [
+        "metal industry prices",
+        "copper prices",
+        "aluminum market",
+        "steel industry news",
+        "metal commodities",
+    ],
+    "RSS_BASE_URL": "https://news.google.com/rss/search",
+    "RSS_PARAMS": {
+        "hl": "en-US",
+        "gl": "US",
+        "ceid": "US:en",
+    },
+    "FETCH_LIMIT": 50,  # Max articles per fetch
+    "REQUEST_TIMEOUT": 30,  # Timeout for RSS feed requests
 }
 
 # Logging
@@ -204,6 +242,16 @@ LOGGING = {
         "metal_prices": {
             "handlers": ["console"],
             "level": "DEBUG",
+            "propagate": False,
+        },
+        "metal_news": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "celery": {
+            "handlers": ["console"],
+            "level": "INFO",
             "propagate": False,
         },
     },
